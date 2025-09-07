@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct MarineIntelAppApp: App {
+struct MarineIntelApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ShipMapView()
         }
     }
 }
