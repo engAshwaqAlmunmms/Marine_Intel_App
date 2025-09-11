@@ -11,6 +11,7 @@ struct AISResponse: Codable {
 }
 
 struct MetaDataResponse: Codable {
+    let id = UUID() 
     let shipName: String?
     let mmsi: Int? // Maritime Mobile Service Identity , 9 digit
     let latitude: Double?

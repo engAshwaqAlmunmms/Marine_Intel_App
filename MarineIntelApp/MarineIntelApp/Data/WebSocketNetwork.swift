@@ -20,26 +20,24 @@ class WebSocketNetwork {
         fetchRequest()
     }
     
-    private func fetchRequest() {
+    func fetchRequest() {
         let subscriptionMessage: [String: Any] = [
             "APIKey": API_KEY,
             "BoundingBoxes": [
-                [[25.835302, -80.207729],
-                 [25.602700, -79.879297]],
-                [[33.772292, -118.356139],
-                 [33.673490, -118.095731]]
+                [[21.6, 39.0],    // Top-left
+                         [21.3, 39.4]]  
             ],
-            "FilterMessageTypes": ["PositionReport"] 
+            "FilterMessageTypes": ["PositionReport"]
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: subscriptionMessage)
             if let jsonString = String(data: jsonData, encoding: .utf8) {
                 webSocketTask?.send(.string(jsonString)) { error in
-                    print("❌ something error \(error.debugDescription)")
+                    print("❌ Something error \(error.debugDescription)")
                 }
             }
         } catch {
-            print("❌ wrong JSON: \(error)")
+            print("❌ Wrong JSON: \(error)")
         }
     }
 
@@ -57,7 +55,7 @@ class WebSocketNetwork {
                 }
                 self?.receiveResponse(completion: completion) // continue listening
             case .failure(let error):
-                print("❌ error in receive WebSocket: \(error)")
+                print("❌ Error in receive WebSocket: \(error)")
             }
         }
     }
