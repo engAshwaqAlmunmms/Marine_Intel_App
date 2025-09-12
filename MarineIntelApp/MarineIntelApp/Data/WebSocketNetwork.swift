@@ -21,13 +21,14 @@ class WebSocketNetwork {
     }
     
     func fetchRequest() {
+        let worldBoundingBox = [
+            [-180.0, 90.0],   // top-left (lon, lat)
+            [180.0, -90.0]    // bottom-right (lon, lat)
+        ]
         let subscriptionMessage: [String: Any] = [
             "APIKey": API_KEY,
-            "BoundingBoxes": [
-                [[21.6, 39.0],    // Top-left
-                         [21.3, 39.4]]  
-            ],
-            "FilterMessageTypes": ["PositionReport"]
+            "BoundingBoxes": [worldBoundingBox],
+            "FilterMessageTypes": ["ShipStaticData"]
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: subscriptionMessage)

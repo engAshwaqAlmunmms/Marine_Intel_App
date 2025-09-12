@@ -12,12 +12,13 @@ import SwiftUI
 class MapViewModel: ObservableObject {
     @Published var ships: [Ship] = []
     @Published var webSocket: WebSocketNetwork = WebSocketNetwork()
-    @Published var cameraPosition: MapCameraPosition? = .region(
+    @Published var cameraPosition: MapCameraPosition = .region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 21.4858, longitude: 39.1925),  // Jeddah coordinates
-            span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+            center: CLLocationCoordinate2D(latitude: 16.0, longitude: 55.0), // مركز بحر العرب تقريبًا
+            span: MKCoordinateSpan(latitudeDelta: 100.0, longitudeDelta: 100.0) // Zoom Out كبير
         )
     )
+    
     func startWebSocket() {
         webSocket = WebSocketNetwork()
         webSocket.connect()
@@ -30,21 +31,14 @@ class MapViewModel: ObservableObject {
             let ship = Ship(name: name,
                             coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon),
                             timestamp: time)
-            print("🛳 Received ship: \(ship.name) at \(lat), \(lon)")
+            print("🛳 Received ship: \(ship.name)")
             DispatchQueue.main.async {
                 if let index = self?.ships.firstIndex(where: { $0.name == name }) {
                     self?.ships[index] = ship
                 } else {
                     self?.ships.append(ship)
-                    if self?.cameraPosition == nil {
-                        self?.cameraPosition = .region(MKCoordinateRegion(
-                            center: ship.coordinate,
-                            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-                        ))
-                    }
                 }
             }
-            //print("🛳 Ship count: \(self?.ships.count ?? -1)")
         }
     }
 }
