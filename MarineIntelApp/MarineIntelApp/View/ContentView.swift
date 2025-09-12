@@ -4,10 +4,11 @@ import MapKit
 struct ShipMapView: View {
     @StateObject var vm = MapViewModel()
     
+    
+    
     var body: some View {
         GeometryReader { geo in
-            if let cameraPosition = vm.cameraPosition {
-                Map(initialPosition: cameraPosition) {
+            Map(position: $vm.cameraPosition) {
                     ForEach(vm.ships) { ship in
                         Annotation(ship.name, coordinate: ship.coordinate) {
                             VStack {
@@ -23,11 +24,6 @@ struct ShipMapView: View {
                     }
                 }
                 .background(Color.clear)
-            } else {
-                ProgressView("Loading...")
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .background(Color(.systemBackground))
-            }
         }
         .onAppear {
             vm.startWebSocket()

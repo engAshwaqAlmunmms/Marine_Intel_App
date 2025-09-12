@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		ED9A8D792E7377FE00EBE945 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = ED9A8D782E7377FE00EBE945 /* TODO */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		ED1ECAE42E69C03A003FB90E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		ED1ECAD62E69C038003FB90E /* MarineIntelApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarineIntelApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED1ECAE32E69C03A003FB90E /* MarineIntelAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarineIntelAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED1ECAED2E69C03A003FB90E /* MarineIntelAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarineIntelAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED9A8D782E7377FE00EBE945 /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		ED1ECACD2E69C038003FB90E = {
 			isa = PBXGroup;
 			children = (
+				ED9A8D782E7377FE00EBE945 /* TODO */,
 				ED1ECAD82E69C038003FB90E /* MarineIntelApp */,
 				ED1ECAE62E69C03A003FB90E /* MarineIntelAppTests */,
 				ED1ECAF02E69C03A003FB90E /* MarineIntelAppUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED9A8D792E7377FE00EBE945 /* TODO in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
