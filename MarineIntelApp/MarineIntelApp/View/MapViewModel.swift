@@ -12,16 +12,17 @@ import SwiftUI
 class MapViewModel: ObservableObject {
     @Published var ships: [Ship] = []
     @Published var webSocket: WebSocketNetwork = WebSocketNetwork()
+    @Published var boundingBox: BoundingBoxModel?
     @Published var cameraPosition: MapCameraPosition = .region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 16.0, longitude: 55.0), // مركز بحر العرب تقريبًا
-            span: MKCoordinateSpan(latitudeDelta: 100.0, longitudeDelta: 100.0) // Zoom Out كبير
+            center: CLLocationCoordinate2D(latitude: 16.0, longitude: 55.0),
+            span: MKCoordinateSpan(latitudeDelta: 100.0, longitudeDelta: 100.0)
         )
     )
     
     func startWebSocket() {
         webSocket = WebSocketNetwork()
-        webSocket.connect()
+        webSocket.connect(boundingBox: boundingBox ?? BoundingBoxModel(minLat: -60, maxLat: 65, minLon: 100, maxLon: 180))
         webSocket.receiveResponse { [weak self] response in
             guard let meta = response.metaData else { return }
             let name = meta.shipName ?? "Unknown"
@@ -40,5 +41,9 @@ class MapViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func stopWebSocket() {
+        webSocket.disconnect()
     }
 }

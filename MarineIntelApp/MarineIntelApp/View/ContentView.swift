@@ -2,30 +2,40 @@ import SwiftUI
 import MapKit
 
 struct ShipMapView: View {
+    
     @StateObject var vm = MapViewModel()
     @State private var wavesCount = 0
     @State private var oceansPage  = false
+    @State private var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+        span: MKCoordinateSpan(latitudeDelta: 180, longitudeDelta: 360)
+    )
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Map(position: $vm.cameraPosition) {
-                    ForEach(vm.ships) { ship in
-                        Annotation(ship.name, coordinate: ship.coordinate) {
-                            VStack {
-                                Image(systemName: "ferry.fill")
-                                    .foregroundColor(.blue)
-                                Text(ship.name)
-                                    .font(.caption)
-                                    .padding(4)
-                                    .background(Color.white.opacity(0.8))
-                                    .cornerRadius(4)
-                            }
+                Map(coordinateRegion: $region,
+                    annotationItems: vm.ships) { ship in
+                    MapAnnotation(coordinate: ship.coordinate) {
+                        VStack {
+                            Image(systemName: "ferry.fill")
+                                .foregroundColor(.blue)
+                            Text(ship.name)
+                                .font(.caption)
+                                .padding(4)
+                                .background(Color.white.opacity(0.8))
+                                .cornerRadius(4)
                         }
                     }
                 }
                 .preferredColorScheme(.dark)
-                NavigationLink(destination: OceansView()) {
+                NavigationLink(destination:
+                OceansView { box in
+                    vm.stopWebSocket()
+                    vm.boundingBox = box
+                    region = box.toRegion()
+                })
+                {
                     ZStack {
                         Circle()
                             .fill(Color.colorFromHex("F0F8FF"))
@@ -42,12 +52,8 @@ struct ShipMapView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .onAppear {
-//                vm.startWebSocket()
+                vm.startWebSocket()
             }
         }
     }
-}
-
-#Preview {
-    ShipMapView(vm: MapViewModel())
 }

@@ -12,18 +12,18 @@ class WebSocketNetwork {
     private let API_KEY = "f61c6242499febc6da1e0642529332e50523c89f"
     private var webSocketTask: URLSessionWebSocketTask?
     
-    func connect() {
+    func connect(boundingBox: BoundingBoxModel) {
         let url = URL(string: "wss://stream.aisstream.io/v0/stream")!
         let urlSession = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue())
         webSocketTask = urlSession.webSocketTask(with: url)
         webSocketTask?.resume()
-        fetchRequest()
+        fetchRequest(boundingBox: boundingBox)
     }
     
-    func fetchRequest() {
+    func fetchRequest(boundingBox: BoundingBoxModel) {
         let worldBoundingBox = [
-            [-180.0, 90.0],   // top-left (lon, lat)
-            [180.0, -90.0]    // bottom-right (lon, lat)
+            [boundingBox.minLon, boundingBox.maxLat],   // top-left (lon, lat)
+            [boundingBox.maxLon, boundingBox.minLat]    // bottom-right (lon, lat)
         ]
         let subscriptionMessage: [String: Any] = [
             "APIKey": API_KEY,
@@ -69,5 +69,9 @@ class WebSocketNetwork {
             print("❌ JSON decode error: \(error.localizedDescription)")
             return AISResponse(messageType: "", metaData: nil)
         }
+    }
+    
+    func disconnect() {
+        webSocketTask?.cancel(with: .goingAway, reason: nil)
     }
 }
