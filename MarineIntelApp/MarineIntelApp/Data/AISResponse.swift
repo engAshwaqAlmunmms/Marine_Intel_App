@@ -1,76 +1,115 @@
 import Foundation
 
-struct AISResponse: Codable {
-    let messageType: String?
-    let metaData: MetaDataResponse?
+struct AISResponse: Decodable {
+    let messageType: String
+    let metaData: MetaData?
+    let message: AISMessage?
 
     enum CodingKeys: String, CodingKey {
         case messageType = "MessageType"
-        case metaData = "MetaData"
+        case metaData    = "MetaData"
+        case message     = "Message"
     }
 }
 
-struct MetaDataResponse: Codable {
-    let id = UUID() 
-    let shipName: String?
-    let mmsi: Int? // Maritime Mobile Service Identity , 9 digit
-    let latitude: Double?
-    let longitude: Double?
-    let time: String?
-    
+struct MetaData: Decodable {
+    let mmsi: Int
+    let shipName: String
+    let latitude: Double
+    let longitude: Double
+    let timeUtc: String
+
     enum CodingKeys: String, CodingKey {
-        case shipName = "ShipName"
-        case mmsi = "MMSI"
-        case latitude
-        case longitude
-        case time = "time_utc"
+        case mmsi      = "MMSI"
+        case shipName  = "ShipName"
+        case latitude  = "latitude"
+        case longitude = "longitude"
+        case timeUtc   = "time_utc"
     }
 }
 
-struct MessageResponse: Codable {
-    let positionReport: PositionReportResponse?
-    
+struct AISMessage: Decodable {
+    let shipStaticData: ShipStaticData?
+
     enum CodingKeys: String, CodingKey {
-        case positionReport = "PositionReport"
+        case shipStaticData = "ShipStaticData"
     }
 }
 
-struct PositionReportResponse: Codable {
-    let cog: Int?
-    let communicationState: Int?
-    let latitude: Double?
-    let longitude: Double?
-    let messageID: Int?
-    let navigationalStatus: Int?
-    let positionAccuracy: Bool?
-    let raim: Bool?
-    let rateOfTurn: Int?
-    let repeatIndicator: Int?
-    let sog: Int?
-    let spare: Int?
-    let specialManoeuvreIndicator: Int?
-    let timestamp: Int?
-    let trueHeading: Int?
-    let userID: Int?
-    let valid: Bool?
-    
+// MARK: - ShipStaticData
+
+struct ShipStaticData: Decodable {
+    let messageID: Int
+    let userID: Int
+    let valid: Bool
+    let aisVersion: Int
+    let imoNumber: Int
+    let callSign: String
+    let name: String
+    let type: Int
+    let dimension: Dimension
+    let fixType: Int
+    let eta: Eta
+    let maximumStaticDraught: Double
+    let destination: String
+    let dte: Bool
+
     enum CodingKeys: String, CodingKey {
-        case cog = "Cog"
-        case communicationState = "CommunicationState"
-        case latitude = "Latitude"
-        case longitude = "Longitude"
-        case messageID = "MessageID"
-        case navigationalStatus = "NavigationalStatus"
-        case positionAccuracy = "PositionAccuracy"
-        case raim = "Raim"
-        case rateOfTurn = "RateOfTurn"
-        case repeatIndicator = "RepeatIndicator"
-        case sog = "Sog"
-        case spare = "Spare"
-        case specialManoeuvreIndicator = "SpecialManoeuvreIndicator"
-        case timestamp = "Timestamp"
-        case trueHeading = "TrueHeading"
-        case userID = "UserID"
-        case valid = "Valid"
+        case messageID            = "MessageID"
+        case userID               = "UserID"
+        case valid                = "Valid"
+        case aisVersion           = "AisVersion"
+        case imoNumber            = "ImoNumber"
+        case callSign             = "CallSign"
+        case name                 = "Name"
+        case type                 = "Type"
+        case dimension            = "Dimension"
+        case fixType              = "FixType"
+        case eta                  = "Eta"
+        case maximumStaticDraught = "MaximumStaticDraught"
+        case destination          = "Destination"
+        case dte                  = "Dte"
+    }
+
+    struct Dimension: Decodable {
+        let a: Int  // bow to GPS
+        let b: Int  // stern to GPS
+        let c: Int  // port
+        let d: Int  // starboard
+
+        var length: Int { a + b }
+        var width: Int  { c + d }
+
+        enum CodingKeys: String, CodingKey {
+            case a = "A", b = "B", c = "C", d = "D"
+        }
+    }
+
+    struct Eta: Decodable {
+        let month: Int
+        let day: Int
+        let hour: Int
+        let minute: Int
+
+        enum CodingKeys: String, CodingKey {
+            case month  = "Month"
+            case day    = "Day"
+            case hour   = "Hour"
+            case minute = "Minute"
+        }
+
+        var formatted: String {
+            guard month > 0 else { return "N/A" }
+            return String(format: "%02d/%02d %02d:%02d UTC", month, day, hour, minute)
+        }
+    }
+}
+
+// MARK: - String Helper
+
+extension String {
+    var cleanedAIS: String {
+        self.replacingOccurrences(of: "@", with: "")
+            .trimmingCharacters(in: .whitespaces)
     }
 }
