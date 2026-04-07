@@ -10,7 +10,15 @@ import MapKit
 
 struct Ship: Identifiable {
     let id = UUID()
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-    let timestamp: Date
+    var name: String
+    let mmsi: Int
+    var coordinate: CLLocationCoordinate2D
+    var timestamp: Date
+    var callSign: String
+    var destination: String
+    var eta: String
+    var shipType: Int
+    var draught: Double
+    var length: Int
+    var width: Int
 }

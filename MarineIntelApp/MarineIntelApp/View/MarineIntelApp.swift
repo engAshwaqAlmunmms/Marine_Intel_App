@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct MarineIntelApp: App {
+    @AppStorage("appLanguage") private var appLanguage: String = "en"
+
     var body: some Scene {
         WindowGroup {
             ShipMapView()
+                .environment(\.layoutDirection, appLanguage == "ar" ? .rightToLeft : .leftToRight)
+                .onAppear {
+                    UserDefaults.standard.set([appLanguage], forKey: "AppleLanguages")
+                }
         }
     }
 }
