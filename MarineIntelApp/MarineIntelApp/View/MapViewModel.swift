@@ -18,7 +18,7 @@ class MapViewModel: ObservableObject {
     
     func startWebSocket() {
         webSocket = WebSocketNetwork()
-        webSocket.connect()
+        webSocket.connect(boundingBox: boundingBox ?? BoundingBoxModel(minLat: -60, maxLat: 65, minLon: 100, maxLon: 180))
         webSocket.receiveResponse { [weak self] response in
             guard let meta = response.metaData,
                   let shipStaticData = response.message?.shipStaticData else { return }
