@@ -30,12 +30,11 @@ struct ShipMapView: View {
                         region = box.toRegion()
                         vm.oceanName = oceanName
                     }
-                    
                     LanguageButton()
                 }
             }
             .onAppear {
-//                vm.startWebSocket()
+                vm.startWebSocket()
             }
             .modifier(NavigationBarStyle(title: vm.oceanName.isEmpty ? appLanguage == "ar" ? "المحيط الهادي" : "Pacific Ocean" : vm.oceanName))
             .sheet(item: $selectedShip) { ship in

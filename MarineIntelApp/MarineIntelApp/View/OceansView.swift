@@ -6,7 +6,33 @@
 //
 
 import SwiftUI
+import MapKit
 
+struct BoundingBoxModel {
+    let minLat: Double
+    let maxLat: Double
+    let minLon: Double
+    let maxLon: Double
+    
+    public func toRegion() -> MKCoordinateRegion {
+        let center = CLLocationCoordinate2D(
+            latitude: (minLat + maxLat) / 2,
+            longitude: (minLon + maxLon) / 2
+        )
+        let span = MKCoordinateSpan(
+            latitudeDelta: maxLat - minLat,
+            longitudeDelta: maxLon - minLon
+        )
+        return MKCoordinateRegion(center: center, span: span)
+    }
+}
+
+struct OceanModel: Identifiable {
+    let id = UUID()
+    let title: String
+    let image: String
+    let boundingBox: BoundingBoxModel
+}
 
 struct OceansView: View {
     
@@ -118,10 +144,6 @@ struct OceanRowButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.85 : 1.0)
             .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
-}
-
-#Preview {
-    OceansView()
 }
 
 extension Color {
