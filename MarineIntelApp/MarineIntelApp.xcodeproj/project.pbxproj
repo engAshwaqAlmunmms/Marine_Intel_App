@@ -35,7 +35,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		ED5796A32F859B01005CDE0D /* Exceptions for "MarineIntelApp" folder in "MarineIntelApp" target */ = {
+		ED7D73022F89AA2000738C21 /* Exceptions for "MarineIntelApp" folder in "MarineIntelApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -48,7 +48,7 @@
 		ED1ECAD82E69C038003FB90E /* MarineIntelApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				ED5796A32F859B01005CDE0D /* Exceptions for "MarineIntelApp" folder in "MarineIntelApp" target */,
+				ED7D73022F89AA2000738C21 /* Exceptions for "MarineIntelApp" folder in "MarineIntelApp" target */,
 			);
 			path = MarineIntelApp;
 			sourceTree = "<group>";
@@ -422,6 +422,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MarineIntelApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ship Tracker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -452,6 +454,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MarineIntelApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ship Tracker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
