@@ -9,16 +9,20 @@ import Foundation
 import MapKit
 
 struct Ship: Identifiable {
-    let id = UUID()
+    let id: Int
     var name: String
-    let mmsi: Int
     var coordinate: CLLocationCoordinate2D
     var timestamp: Date
-    var callSign: String
-    var destination: String
-    var eta: String
-    var shipType: Int
-    var draught: Double
-    var length: Int
-    var width: Int
+    var imo: String?
+    var callSign: String?
+    var destination: String?
+    var eta: String?
+    var shipType: Int?
+    var flag: String?
+    var draught: Double?
+    var length: Int?
+    var width: Int?
+    var speed: Double?
+    var heading: Int?
+    var navigationStatus: Int?
 }

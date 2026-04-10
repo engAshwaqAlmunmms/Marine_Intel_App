@@ -41,7 +41,7 @@ struct ShipDetailSheet: View {
                 SectionHeader(title: appLanguage == "ar" ? "الهوية" : "Identity")
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 1) {
                     InfoCell(icon: "antenna.radiowaves.left.and.right", label: appLanguage == "ar" ? "رقم تعريف الخدمة المتنقلة البحرية" : "MMSI",value: "\(ship.id)")
-                    InfoCell(icon: "radio.fill", label: appLanguage == "ar" ? "إشارة النداء" :"Call Sign", value: ship.callSign)
+                    InfoCell(icon: "radio.fill", label: appLanguage == "ar" ? "إشارة النداء" :"Call Sign", value: ship.callSign ?? "")
                 }
                 .padding(.bottom, 8)
 
@@ -50,17 +50,19 @@ struct ShipDetailSheet: View {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 1) {
                     InfoCell(icon: "location.fill", label: appLanguage == "ar" ? "خط العرض" :"Latitude", value: String(format: "%.4f°", ship.coordinate.latitude))
                     InfoCell(icon: "location.fill", label: appLanguage == "ar" ? "خط الطول" :"Longitude", value: String(format: "%.4f°", ship.coordinate.longitude))
-                    InfoCell(icon: "building.2.fill", label: appLanguage == "ar" ? "الوجهة" :"Destination", value: ship.destination)
-                    InfoCell(icon: "clock.fill", label: appLanguage == "ar" ? "وقت الوصول المتوقع" :"ETA", value: ship.eta)
+                    InfoCell(icon: "building.2.fill", label: appLanguage == "ar" ? "الوجهة" :"Destination", value: ship.destination ?? "")
+                    InfoCell(icon: "clock.fill", label: appLanguage == "ar" ? "وقت الوصول المتوقع" :"ETA", value: ship.eta ?? "")
+                    InfoCell(icon: "speedometer",  label: appLanguage == "ar" ? "السرعة" :"Speed",   value: ship.speed.map   { String(format: "%.1f kn", $0) } ?? "N/A")
+                    InfoCell(icon: "safari.fill",  label: appLanguage == "ar" ? "العنوان" :"Heading", value: ship.heading.map { "\($0)°" } ?? "N/A")
                 }
                 .padding(.bottom, 8)
 
                 // MARK: Dimensions
                 SectionHeader(title: appLanguage == "ar" ? "أبعاد السفينة" :"Dimensions")
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 1) {
-                    InfoCell(icon: "ruler",                label: appLanguage == "ar" ? "الطول" :"Length",  value: String(ship.length))
-                    InfoCell(icon: "arrow.left.and.right", label: appLanguage == "ar" ? "العرض" :"Width",   value: String(ship.width))
-                    InfoCell(icon: "water.waves",          label: appLanguage == "ar" ? "غاطس السفينة" :"Draught", value: String(format: "%.1f m", ship.draught))
+                    InfoCell(icon: "ruler",                label: appLanguage == "ar" ? "الطول" :"Length",  value: String(ship.length ?? 0))
+                    InfoCell(icon: "arrow.left.and.right", label: appLanguage == "ar" ? "العرض" :"Width",   value: String(ship.width ?? 0))
+                    InfoCell(icon: "water.waves",          label: appLanguage == "ar" ? "غاطس السفينة" :"Draught", value: String(format: "%.1f m", ship.draught ?? 0))
                 }
                 .padding(.bottom, 8)
 

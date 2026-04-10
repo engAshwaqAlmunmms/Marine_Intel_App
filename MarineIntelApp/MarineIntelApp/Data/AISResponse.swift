@@ -30,13 +30,33 @@ struct MetaData: Decodable {
 
 struct AISMessage: Decodable {
     let shipStaticData: ShipStaticData?
+    let positionReport: PositionReport?
 
     enum CodingKeys: String, CodingKey {
         case shipStaticData = "ShipStaticData"
+        case positionReport = "PositionReport"
     }
 }
 
-// MARK: - ShipStaticData
+struct PositionReport: Decodable {
+    let userID: Int
+    let latitude: Double
+    let longitude: Double
+    let sog: Double
+    let cog: Double
+    let trueHeading: Int
+    let navigationalStatus: Int
+
+    enum CodingKeys: String, CodingKey {
+        case userID              = "UserID"
+        case latitude            = "Latitude"
+        case longitude           = "Longitude"
+        case sog                 = "Sog"
+        case cog                 = "Cog"
+        case trueHeading         = "TrueHeading"
+        case navigationalStatus  = "NavigationalStatus"
+    }
+}
 
 struct ShipStaticData: Decodable {
     let messageID: Int
@@ -102,14 +122,5 @@ struct ShipStaticData: Decodable {
             guard month > 0 else { return "N/A" }
             return String(format: "%02d/%02d %02d:%02d UTC", month, day, hour, minute)
         }
-    }
-}
-
-// MARK: - String Helper
-
-extension String {
-    var cleanedAIS: String {
-        self.replacingOccurrences(of: "@", with: "")
-            .trimmingCharacters(in: .whitespaces)
     }
 }
