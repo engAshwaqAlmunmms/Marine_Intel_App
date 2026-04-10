@@ -36,6 +36,7 @@ struct ShipMapView: View {
             .onAppear {
                 vm.startWebSocket()
             }
+            .environment(\.layoutDirection, .leftToRight)
             .modifier(NavigationBarStyle(title: vm.oceanName.isEmpty ? appLanguage == "ar" ? "المحيط الهادي" : "Pacific Ocean" : vm.oceanName))
             .sheet(item: $selectedShip) { ship in
                 ShipDetailSheet(ship: ship)

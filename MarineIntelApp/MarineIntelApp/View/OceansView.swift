@@ -116,7 +116,7 @@ struct OceansView: View {
                         .fill(chevronBackground)
                         .frame(width: 36, height: 36)
                     
-                    Image(systemName: "chevron.right")
+                    Image(systemName: appLanguage == "ar" ? "chevron.left" : "chevron.right")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(.white)
                 }
