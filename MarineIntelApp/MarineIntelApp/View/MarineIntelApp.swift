@@ -14,7 +14,7 @@ struct MarineIntelApp: App {
     var body: some Scene {
         WindowGroup {
             ShipMapView()
-                .environment(\.layoutDirection, appLanguage == "ar" ? .rightToLeft : .leftToRight)
+                .environment(\.locale, Locale(identifier: appLanguage))
                 .onAppear {
                     UserDefaults.standard.set([appLanguage], forKey: "AppleLanguages")
                 }
